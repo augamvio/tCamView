@@ -1,0 +1,37 @@
+﻿ShortCut (HotKey) of tCamView 
+
+==============
+PicutureSize Mode
+Z : Zoom
+X : Stretch
+C : Center
+==============
+Window Styles
+N (or Esc) : Normal Border (Resizable)  
+E : Borderless Ellipse (FixedSize)
+R : Borderless Rectangle (FixedSize)
+W : Borderless Rounded Rectangle (FixedSize)
+F : Full Screen
+==============
+Image Flipping
+H : Horizontal Flipping (toggle)
+V : Vertical Flipping (toggle)
+==============
+Opacity Control
+Up Arrow: Opacity Increase
+Down Arrow: Opacity Decrease
+Right Arrow: Opacity 100% (max)
+Left Arrow: Opacity 20% (min)
+==============
+Additional Features
+G : GetImage From Clipboard
+I : SetImage To Clipboard
+D : SetImage To Clipboard After 5 Seconds
+S : CopyScreen To Clipboard
+Page Up : CropImage (ZoomIn)
+Page Down : CropImage (ZoomOut)
+==============
+Window Control
+T : Always on Top (toggle)
+L : Minimize
+Q : Quit
