@@ -3,6 +3,11 @@
 tCamView is a simple WebCam viewer software that I have created and used for educational purposes.
 You can display your webcam video on top of the computer screen with the following features.
 
+![feature1](https://github.com/augamvio/tCamView/raw/main/image1.jpg)  
+![feature2](https://github.com/augamvio/tCamView/raw/main/image2.jpg)  
+![feature3](https://github.com/augamvio/tCamView/raw/main/image3.jpg)  
+![feature4](https://github.com/augamvio/tCamView/raw/main/image4.jpg)  
+
 ## Features
 
 - 3 PictureSize Modes
@@ -32,6 +37,12 @@ You can display your webcam video on top of the computer screen with the followi
 - Always on Top
 - Display multiple webcam videos with multiple instances
 - Move the window with the left mouse button drag
+
+## How to use
+Right-click to display the menu 
+![menu](https://github.com/augamvio/tCamView/raw/main/image5.jpg)  
+
+or press the Hotkey (see ![ShortCut.txt](https://github.com/augamvio/tCamView/raw/main/ShortCut.txt) ).
 
 ## License
 
