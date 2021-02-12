@@ -1,6 +1,6 @@
 ## tCamView
 
-tCamView is a simple WebCam viewer software that I have created and used for educational purposes.
+tCamView is a simple WebCam viewer software made for educational purposes.
 You can display your webcam video on top of the computer screen with the following features.
 
 ![feature1](https://github.com/augamvio/tCamView/raw/main/image1.jpg)  
