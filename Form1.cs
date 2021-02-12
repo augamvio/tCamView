@@ -61,8 +61,8 @@ namespace tCamView
             this.Icon = Properties.Resources.webcam;
             this.Opacity = 1.0;
 
-            pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
-            this.Text = "tCamView (zoom)";
+            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
+            this.Text = "tCamView (stretch)";
 
             // DPI aware 
             // https://help.syncfusion.com/windowsforms/highdpi-support
@@ -402,8 +402,28 @@ namespace tCamView
                 var image = (Bitmap)eventArgs.Frame.Clone(new System.Drawing.Rectangle(cropSize, vcropSize, 
                     eventArgs.Frame.Width - 2*cropSize, eventArgs.Frame.Height - 2*vcropSize), eventArgs.Frame.PixelFormat);
 
-                if ((pictureBox1.SizeMode == PictureBoxSizeMode.CenterImage) && (cropSize != 0))
+                if (pictureBox1.SizeMode == PictureBoxSizeMode.StretchImage)
                 {
+                    // 가로세로 비율을 유지하면서 Stretch수행  (UniformToFill) 
+                    float ratioImage = (float)eventArgs.Frame.Width / eventArgs.Frame.Height;
+                    float ratioPictureBox = (float)pictureBox1.ClientSize.Width / pictureBox1.ClientSize.Height;
+                    if (ratioImage >= ratioPictureBox)
+                    {
+                        int newWidth = (int)(image.Height * ratioPictureBox);
+                        int wcrop = (int)((image.Width - newWidth) / 2);
+                        image = (Bitmap)image.Clone(new System.Drawing.Rectangle(wcrop, 0, image.Width - 2 * wcrop, image.Height), image.PixelFormat);
+                    }
+                    else
+                    {
+                        int newHeight = (int)(image.Width / ratioPictureBox);
+                        int hcrop = (int)((image.Height - newHeight) / 2);
+                        image = (Bitmap)image.Clone(new System.Drawing.Rectangle(0, hcrop, image.Width, image.Height - 2 * hcrop), image.PixelFormat);
+                    }
+                }
+                else if ((pictureBox1.SizeMode == PictureBoxSizeMode.CenterImage) && (cropSize != 0))
+                {
+                    // PictureBoxSizeMode.CenterImage인 경우 cropping이 발생하면 영상크기가 줄어듬.
+                    // 줄어든 영상을 원본영상크기로 재조정해서 보여주면 윈도우의 크기는 변화되지 않고 영상만 확대되는 느낌이 듦.
                     image = new Bitmap(image, new System.Drawing.Size(eventArgs.Frame.Width, eventArgs.Frame.Height));
                 }
 

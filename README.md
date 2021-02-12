@@ -11,8 +11,8 @@ You can display your webcam video on top of the computer screen with the followi
 ## Features
 
 - 3 PictureSize Modes
-  * Zoom(Uniform) : Enlarge to fit the window size while maintaining the aspect ratio of the webcam video
-  * Stretch(Fill) : Enlarge to fit the window size without considering the aspect ratio of the webcam video
+  * Zoom : Enlarge to fit the window size while maintaining the aspect ratio of the webcam video (aka. Uniform)
+  * Stretch : Enlarge to fill the window size while maintaining the aspect ratio of the webcam video. If the window size is changed, the webcam video content is clipped to fit in the window dimensions. (aka. UniformToFill)
   * Center : No resizing. If the window size is changed, the center area of ​​the webcam video is displayed
 - 5 Window Styles
   * Normal Border (Resizable)
