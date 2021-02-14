@@ -56,7 +56,7 @@ or press the Hotkey (see ![ShortCut.txt](https://github.com/augamvio/tCamView/ra
 
 ## License
 
-Copyright © 2020, Sung Deuk Kim  
+Copyright © 2020-2021, Sung Deuk Kim  
 All rights reserved.  
 Published under the GNU GPLv3 license. (For details, see license.txt)
 
