@@ -64,7 +64,7 @@ or press the Hotkey (see ![ShortCut.txt](https://github.com/augamvio/tCamView/ra
   * Ctrl + C as a hotkey to copy camera image to clipboard
   * Ctrl + V as a hotkey to display the image saved in the clipboard in the window. At this time, the camera stops.
   * Space key as a hotkey to restart the camera stopped by Ctrl + V
-  * "SetImage To Clipboard" copies the acquired camera image to the Clipboard, while "CopyScreen To Clipboard" copies the screen displayed in the window area to the Clipboard.
+  * "SetImage To Clipboard [Ctrl + C]" copies the acquired camera image to the Clipboard, while "CopyScreen To Clipboard [S]" copies the screen displayed in the window area to the Clipboard.
 
 - Note on Window Size
   * The window size is fixed in the borderless window style, but the size can be changed using the P and M keys.
