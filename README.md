@@ -31,7 +31,7 @@ You can display your webcam video on top of the computer screen with the followi
   * Opacity 20% (min) [Left Arrow]
 - Additional Features regarding the Clipboard
   * GetImage From Clipboard [G or Ctrl+V]
-  * SetImage To Clipboard [I or Ctrl+V]
+  * SetImage To Clipboard [I or Ctrl+C]
   * SetImage To Clipboard After 5 Seconds [D]
   * CopyScreen To Clipboard [S]
   * Resume CameraPreview (From ClipboardView) [Space]
@@ -53,6 +53,21 @@ Right-click to display the menu
 ![menu](https://github.com/augamvio/tCamView/raw/main/image5.jpg)  
 
 or press the Hotkey (see ![ShortCut.txt](https://github.com/augamvio/tCamView/raw/main/ShortCut.txt) ).
+
+- Note on camera selection and video resolution selection
+  * Select the camera by right-clicking and selecting the "Video Capture Device" menu.
+  * Select the camera resolution by right-clicking and selecting the "Video Resolution" menu.
+  * Selecting a camera automatically updates supported video resolutions.
+  * The higher the resolution, the more CPU resources are used.
+  
+- Note on Clipboard
+  * Ctrl + C as a hotkey to copy camera image to clipboard
+  * Ctrl + V as a hotkey to display the image saved in the clipboard in the window. At this time, the camera stops.
+  * Space key as a hotkey to restart the camera stopped by Ctrl + V
+  * "SetImage To Clipboard" copies the acquired camera image to the Clipboard, while "CopyScreen To Clipboard" copies the screen displayed in the window area to the Clipboard.
+
+- Note on Window Size
+  * The window size is fixed in the borderless window style, but the size can be changed using the P and M keys.
 
 ## License
 
