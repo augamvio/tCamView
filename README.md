@@ -10,33 +10,43 @@ You can display your webcam video on top of the computer screen with the followi
 
 ## Features
 
-- 3 PictureSize Modes
-  * Zoom : Enlarge to fit the window size while maintaining the aspect ratio of the webcam video (aka. Uniform)
-  * Stretch : Enlarge to fill the window size while maintaining the aspect ratio of the webcam video. If the window size is changed, the webcam video content is clipped to fit in the window dimensions. (aka. UniformToFill)
-  * Center : No resizing. If the window size is changed, the center area of ​​the webcam video is displayed
+- 4 PictureSize Modes
+  * Zoom [Z]: Enlarge to fit the window size while maintaining the aspect ratio of the webcam video (aka. Uniform)
+  * Stretch [X]: Enlarge to fill the window size without considering the aspect ratio of the webcam video (aka. Fill)
+  * Center [C]: No resizing. If the window size is changed, the center area of ​​the webcam video is displayed
+  * Alt.Stretch [A]: Enlarge to fill the window size while maintaining the aspect ratio of the webcam video. If the window size is changed, the webcam video content is clipped to fit in the window dimensions. (aka. UniformToFill)
 - 5 Window Styles
-  * Normal Border (Resizable)
-  * Borderless Ellipse (FixedSize)
-  * Borderless Rectangle (FixedSize)
-  * Borderless Rounded Rectangle (FixedSize)
-  * Full Screen
+  * Normal Border (Resizable) [N or Esc]
+  * Borderless Ellipse (FixedSize) [E]
+  * Borderless Rectangle (FixedSize) [R]
+  * Borderless Rounded Rectangle (FixedSize) [W]
+  * Full Screen [F]
 - Image Flipping
-  * Horizontal Flipping
-  * Vertical Flipping
+  * Horizontal Flipping [H]
+  * Vertical Flipping [V]
 - Opacity Control
-  * Increase the opacity using the up arrow key
-  * Decrease the opacity using the down arrow key
+  * Increase the opacity [Up Arrow]
+  * Decrease the opacity [Down Arrow]
+  * Opacity 100% (max) [Right Arrow]
+  * Opacity 20% (min) [Left Arrow]
 - Additional Features regarding the Clipboard
-  * GetImage From Clipboard
-  * SetImage To Clipboard
-  * SetImage To Clipboard After 5 Seconds
-  * CopyScreen To Clipboard
+  * GetImage From Clipboard [G or Ctrl+V]
+  * SetImage To Clipboard [I or Ctrl+V]
+  * SetImage To Clipboard After 5 Seconds [D]
+  * CopyScreen To Clipboard [S]
+  * Resume CameraPreview (From ClipboardView) [Space]
 - Additional Features related to Zoom In/Out
-  * CropImage (ZoomIn)
-  * CropImage (ZoomOut)
-- Always on Top
+  * CropImage (ZoomIn) [Page Up]
+  * CropImage (ZoomOut) [Page Down]
+- Additional Features related to Window Size
+  * Increase Window Size [P]
+  * Decrease Window Size [M]
+- Always on Top [T]
+- Minimize [L]
+- Quit [Q]
 - Display multiple webcam videos with multiple instances
 - Move the window with the left mouse button drag
+- Borderless Ellipse/Rectangle/Rounded Rectangle Windows can be resized with [P] and [M].
 
 ## How to use
 Right-click to display the menu 

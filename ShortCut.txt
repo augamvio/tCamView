@@ -5,6 +5,7 @@ PicutureSize Mode
 Z : Zoom
 X : Stretch
 C : Center
+A : Alt.Stretch
 ==============
 Window Styles
 N (or Esc) : Normal Border (Resizable)  
@@ -24,12 +25,15 @@ Right Arrow: Opacity 100% (max)
 Left Arrow: Opacity 20% (min)
 ==============
 Additional Features
-G : GetImage From Clipboard
-I : SetImage To Clipboard
+G (or Ctrl+V) : GetImage From Clipboard
+I (or Ctrl+C) : SetImage To Clipboard
 D : SetImage To Clipboard After 5 Seconds
 S : CopyScreen To Clipboard
 Page Up : CropImage (ZoomIn)
 Page Down : CropImage (ZoomOut)
+Space : Resume To CameraView (From ClipboardView)
+P : Increase the Window Size
+M : Decrease the Window Size
 ==============
 Window Control
 T : Always on Top (toggle)

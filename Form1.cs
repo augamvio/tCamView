@@ -52,6 +52,8 @@ namespace tCamView
         int currMenuItem3WindowStyles = 0;
         const int currMenuItem3WindowStylesCount = 5;
 
+        bool stretchKeepAspectRatio = true;  // Alt.Stretch, UniformToFill
+
         public Form1()
         {
             InitializeComponent();
@@ -62,7 +64,8 @@ namespace tCamView
             this.Opacity = 1.0;
 
             pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
-            this.Text = "tCamView (stretch)";
+            stretchKeepAspectRatio = true;
+            this.Text = "tCamView (alt.stretch)";
 
             // DPI aware 
             // https://help.syncfusion.com/windowsforms/highdpi-support
@@ -107,6 +110,9 @@ namespace tCamView
 
             // Update the Checked mark...
             UpdateMenuItemsChecked();
+
+            // Always on Top
+            this.TopMost = true;
         }
 
         private int openVideoCaptureDevice(int deviceID, int sizeID)
@@ -162,6 +168,7 @@ namespace tCamView
             pictureMode.MenuItems.Add(new MenuItem("Zoom [Z]", MenuItem_Zoom_Click));
             pictureMode.MenuItems.Add(new MenuItem("Stretch [X]", MenuItem_Stretch_Click));
             pictureMode.MenuItems.Add(new MenuItem("Center [C]", MenuItem_Center_Click));
+            pictureMode.MenuItems.Add(new MenuItem("Alt.Stretch [A]", MenuItem_AltStretch_Click));
             MenuItem borderOptions = new MenuItem("Window Styles");
             borderOptions.MenuItems.Add(new MenuItem("Normal Border (Resizable) [N or Esc]", MenuItem_Normal_Border_Click));
             borderOptions.MenuItems.Add(new MenuItem("Borderless Ellipse (FixedSize) [E]", MenuItem_Borderless_Ellipse_Click));
@@ -180,13 +187,17 @@ namespace tCamView
             opacityControl.MenuItems.Add(new MenuItem("Opacity 40%", MenuItem_Opacity_40_Click));
             opacityControl.MenuItems.Add(new MenuItem("Opacity 20% (min) [Left Arrow]", MenuItem_Opacity_20_Click));
             MenuItem addFeatures = new MenuItem("Additional Features");
-            addFeatures.MenuItems.Add(new MenuItem("GetImage From Clipboard [G]", MenuItem_GetImageFromClipboard_Click));
-            addFeatures.MenuItems.Add(new MenuItem("SetImage To Clipboard [I]", MenuItem_SetImageToClipboard_Click));
+            addFeatures.MenuItems.Add(new MenuItem("GetImage From Clipboard [G or ^V]", MenuItem_GetImageFromClipboard_Click));
+            addFeatures.MenuItems.Add(new MenuItem("SetImage To Clipboard [I or ^C]", MenuItem_SetImageToClipboard_Click));
             addFeatures.MenuItems.Add(new MenuItem("SetImage To Clipboard After 5 Sec. [D]", MenuItem_SetImageToClipboardAfter5Sec_Click));
             addFeatures.MenuItems.Add(new MenuItem("CopyScreen To Clipboard [S]", MenuItem_CopyScreenToClipboard_Click));
+            addFeatures.MenuItems.Add(new MenuItem("Resume CameraPreview (From ClipboardView) [Space]", MenuItem_ResumeCameraPreviewFromClipboard_Click));
             addFeatures.MenuItems.Add("-");
             addFeatures.MenuItems.Add(new MenuItem("CropImage(ZoomIn) [Page Up]", MenuItem_CropImageZoomIn_Click));
             addFeatures.MenuItems.Add(new MenuItem("CropImage(ZoomOut) [Page Down]", MenuItem_CropImageZoomOut_Click));
+            addFeatures.MenuItems.Add("-");
+            addFeatures.MenuItems.Add(new MenuItem("Increase the Window Size [P]", MenuItem_IncreaseWindowSize_Click));
+            addFeatures.MenuItems.Add(new MenuItem("Decrease the Window Size [M]", MenuItem_DecreaseWindowSize_Click));
             MenuItem onTop = new MenuItem("Always on Top [T]", MenuItem_AlwaysOnTop_Click);
             MenuItem minimizeApp = new MenuItem("Minimize [L]", MenuItem_Minimize_Click);
             MenuItem quitApp = new MenuItem("Quit [Q]", MenuItem_Quit_Click);
@@ -231,18 +242,31 @@ namespace tCamView
                 pictureBox1.ContextMenu.MenuItems[2].MenuItems[0].Checked = true;
                 pictureBox1.ContextMenu.MenuItems[2].MenuItems[1].Checked = false;
                 pictureBox1.ContextMenu.MenuItems[2].MenuItems[2].Checked = false;
+                pictureBox1.ContextMenu.MenuItems[2].MenuItems[3].Checked = false;
             }
             else if (pictureBox1.SizeMode == PictureBoxSizeMode.StretchImage)
             {
-                pictureBox1.ContextMenu.MenuItems[2].MenuItems[0].Checked = false;
-                pictureBox1.ContextMenu.MenuItems[2].MenuItems[1].Checked = true;
-                pictureBox1.ContextMenu.MenuItems[2].MenuItems[2].Checked = false;
+                if (stretchKeepAspectRatio == false)
+                {
+                    pictureBox1.ContextMenu.MenuItems[2].MenuItems[0].Checked = false;
+                    pictureBox1.ContextMenu.MenuItems[2].MenuItems[1].Checked = true;
+                    pictureBox1.ContextMenu.MenuItems[2].MenuItems[2].Checked = false;
+                    pictureBox1.ContextMenu.MenuItems[2].MenuItems[3].Checked = false;
+                }
+                else
+                {
+                    pictureBox1.ContextMenu.MenuItems[2].MenuItems[0].Checked = false;
+                    pictureBox1.ContextMenu.MenuItems[2].MenuItems[1].Checked = false;
+                    pictureBox1.ContextMenu.MenuItems[2].MenuItems[2].Checked = false;
+                    pictureBox1.ContextMenu.MenuItems[2].MenuItems[3].Checked = true;
+                }
             }
             else if (pictureBox1.SizeMode == PictureBoxSizeMode.CenterImage)
             {
                 pictureBox1.ContextMenu.MenuItems[2].MenuItems[0].Checked = false;
                 pictureBox1.ContextMenu.MenuItems[2].MenuItems[1].Checked = false;
                 pictureBox1.ContextMenu.MenuItems[2].MenuItems[2].Checked = true;
+                pictureBox1.ContextMenu.MenuItems[2].MenuItems[3].Checked = false;
             }
 
             for (int i = 0; i < currMenuItem3WindowStylesCount; i++)
@@ -335,6 +359,8 @@ namespace tCamView
                     }
                     pictureBox1.Refresh();
                     GC.Collect();
+
+                    //this.Text = "tCamview (clipboard)";
                 }
             }
         }
@@ -342,8 +368,8 @@ namespace tCamView
         private void MenuItem_About_Click(object sender, EventArgs e)
         {
             MessageBox.Show(
-                "tCamView 1.3.4\n" +
-                "Copyright © 2020, Sung Deuk Kim\n" +
+                "tCamView 1.3.5\n" +
+                "Copyright © 2020-2021, Sung Deuk Kim\n" +
                 "All rights reserved.\n" +
                 "--------------------------------\n" +
                 "https://github.com/augamvio/tCamView\n" +
@@ -396,13 +422,13 @@ namespace tCamView
                 //var image = (Bitmap)eventArgs.Frame.Clone();
 
                 // 가로세로 비율을 유지하면서 영상 크기를 줄임.
-                cropSize = Math.Max(0,Math.Min(cropSize, Math.Min(eventArgs.Frame.Width / 4, eventArgs.Frame.Height / 4)));
+                cropSize = Math.Max(0,Math.Min(cropSize, Math.Min(eventArgs.Frame.Width / 2, eventArgs.Frame.Height / 2)));
                 float ratio = (float) eventArgs.Frame.Height / eventArgs.Frame.Width;
                 int vcropSize = (int)(cropSize * ratio);
                 var image = (Bitmap)eventArgs.Frame.Clone(new System.Drawing.Rectangle(cropSize, vcropSize, 
                     eventArgs.Frame.Width - 2*cropSize, eventArgs.Frame.Height - 2*vcropSize), eventArgs.Frame.PixelFormat);
 
-                if (pictureBox1.SizeMode == PictureBoxSizeMode.StretchImage)
+                if (pictureBox1.SizeMode == PictureBoxSizeMode.StretchImage && stretchKeepAspectRatio == true)
                 {
                     // 가로세로 비율을 유지하면서 Stretch수행  (UniformToFill) 
                     float ratioImage = (float)eventArgs.Frame.Width / eventArgs.Frame.Height;
@@ -606,8 +632,17 @@ namespace tCamView
 
         private void MenuItem_Stretch_Click(object sender, EventArgs e)
         {
+            stretchKeepAspectRatio = false;
             pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
             this.Text = "tCamView (stretch)";
+            UpdateMenuItemsChecked();
+        }
+
+        private void MenuItem_AltStretch_Click(object sender, EventArgs e)
+        {
+            stretchKeepAspectRatio = true;
+            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
+            this.Text = "tCamView (alt.stretch)";
             UpdateMenuItemsChecked();
         }
 
@@ -620,12 +655,63 @@ namespace tCamView
 
         private void MenuItem_CropImageZoomIn_Click(object sender, EventArgs e)
         {
-            cropSize += 2;
+            cropSize += 5;
         }
 
         private void MenuItem_CropImageZoomOut_Click(object sender, EventArgs e)
         {
-            cropSize -= 2;
+            cropSize -= 5;
+        }
+
+        private void MenuItem_ResumeCameraPreviewFromClipboard_Click(object sender, EventArgs e)
+        {
+            if (cam == null)
+            {
+                openVideoCaptureDevice(currCamID, currSizeID);
+                currMenuItem0VideoCaptureDevices = currCamID;
+                currMenuItem1VideoCapabilities = currSizeID;
+                UpdateMenuItemsChecked();
+            }
+        }
+
+        private void MenuItem_IncreaseWindowSize_Click(object sender, EventArgs e)
+        {
+            if (Width > 4000 || Height > 2000) return;
+            float ratio = (float)Height / Width;
+            Size = new Size(Width + 5, (int)(Height + 5 * ratio + 0.5));
+            if (currMenuItem3WindowStyles == 1) // Borderless_Ellipse
+            {
+                Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, Width, Height, Width, Height));
+            }
+            else if (currMenuItem3WindowStyles == 2) // Borderless_Rectangle
+            {
+                Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, Width, Height, 0, 0));
+            }
+            else if (currMenuItem3WindowStyles == 3) // Borderless_RoundedRectangle
+            {
+                int m = Math.Min(Width, Height) / 4;
+                Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, Width, Height, m, m));
+            }
+        }
+
+        private void MenuItem_DecreaseWindowSize_Click(object sender, EventArgs e)
+        {
+            if (Width < 50 || Height < 50) return;
+            float ratio = (float)Height / Width;
+            Size = new Size(Width - 5, (int)(Height - 5 * ratio + 0.5));
+            if (currMenuItem3WindowStyles == 1) // Borderless_Ellipse
+            {
+                Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, Width, Height, Width, Height));
+            }
+            else if (currMenuItem3WindowStyles == 2) // Borderless_Rectangle
+            {
+                Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, Width, Height, 0, 0));
+            }
+            else if (currMenuItem3WindowStyles == 3) // Borderless_RoundedRectangle
+            {
+                int m = Math.Min(Width, Height) / 4;
+                Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, Width, Height, m, m));
+            }
         }
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
@@ -673,6 +759,20 @@ namespace tCamView
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
+            if (e.KeyData == (Keys.Control | Keys.C))
+            {
+                MenuItem_SetImageToClipboard_Click(null, null);
+                //e.SuppressKeyPress = true;
+                return;
+            }
+            else if (e.KeyData == (Keys.Control | Keys.V))
+            {
+                MenuItem_GetImageFromClipboard_Click(null, null);
+                //e.SuppressKeyPress = true;
+                return;
+            }
+
+
             switch (e.KeyData)
             {
                 //////////////////////////////////////////////
@@ -685,6 +785,9 @@ namespace tCamView
                     return;
                 case Keys.C:
                     MenuItem_Center_Click(null, null);
+                    return;
+                case Keys.A:
+                    MenuItem_AltStretch_Click(null, null);
                     return;
 
                 //////////////////////////////////////////////
@@ -739,6 +842,18 @@ namespace tCamView
                         }
                         return;
                 */
+
+                case Keys.Space: // Resume CameraPreview (escaping from the clipboard view state)
+                    MenuItem_ResumeCameraPreviewFromClipboard_Click(null, null);
+                    return;
+
+                case Keys.P: // Increase the window size
+                    MenuItem_IncreaseWindowSize_Click(null, null);
+                    return;
+
+                case Keys.M: // Descrease the window size
+                    MenuItem_DecreaseWindowSize_Click(null, null);
+                    return;
 
                 //////////////////////////////////////////////
                 /// Additional Features
