@@ -368,7 +368,7 @@ namespace tCamView
         private void MenuItem_About_Click(object sender, EventArgs e)
         {
             MessageBox.Show(
-                "tCamView 1.3.5\n" +
+                "tCamView 1.3.6\n" +
                 "Copyright © 2020-2021, Sung Deuk Kim\n" +
                 "All rights reserved.\n" +
                 "--------------------------------\n" +
@@ -406,6 +406,9 @@ namespace tCamView
 
         private void cam_NewFrame(object sender, NewFrameEventArgs eventArgs)
         {
+            //  Stretch.Alt모드에서 minimized되면 메모리가 계속증가되는 문제 해결
+            if (this.WindowState == FormWindowState.Minimized) return;  
+
             firstimage_captured = true;
 
             /*
@@ -430,7 +433,7 @@ namespace tCamView
 
                 if (pictureBox1.SizeMode == PictureBoxSizeMode.StretchImage && stretchKeepAspectRatio == true)
                 {
-                    // 가로세로 비율을 유지하면서 Stretch수행  (UniformToFill) 
+                    // 가로세로 비율을 유지하면서 Stretch수행  (UniformToFill, Stretch.Alt) 
                     float ratioImage = (float)eventArgs.Frame.Width / eventArgs.Frame.Height;
                     float ratioPictureBox = (float)pictureBox1.ClientSize.Width / pictureBox1.ClientSize.Height;
                     if (ratioImage >= ratioPictureBox)
