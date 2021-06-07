@@ -100,12 +100,18 @@ namespace tCamView
             videoCaptureDevicesListCount = videoCaptureDevicesList.Count;
             for (int i = 0; i < videoCaptureDevicesList.Count; i++)
             {
-                if (openVideoCaptureDevice(i, 0) == 1)
+                if (openVideoCaptureDevice(i, -1) == 1)  // -1: Choose the maximum resolution 
                 {
                     currMenuItem0VideoCaptureDevices = i;
                     currMenuItem1VideoCapabilities = 0;
                     break;
                 }
+            }
+
+            if (videoCaptureDevicesListCount == 0)
+            {  // Even if there is no video capture device,
+               // the context menu must be created to eliminate the runtime error.
+                CreateContextMenu();
             }
 
             // Update the Checked mark...
@@ -117,6 +123,8 @@ namespace tCamView
 
         private int openVideoCaptureDevice(int deviceID, int sizeID)
         {
+            List<int> numOfPixelsList = new List<int>();
+
             if (cam != null)
             {
                 closeVideoCaptureDevice();
@@ -129,13 +137,22 @@ namespace tCamView
 
             var videoCapabilities = cam.VideoCapabilities;
             videoCapabilitiesList.Clear();
+            numOfPixelsList.Clear();
             foreach (var video in videoCapabilities)
             {
                 videoCapabilitiesList.Add(video.FrameSize.Width + "x" + video.FrameSize.Height);
+                numOfPixelsList.Add(video.FrameSize.Width * video.FrameSize.Height);
+            }
+
+            int max, indexMax = 0;
+            if (numOfPixelsList.Count() > 0)
+            {
+                max = numOfPixelsList.Max();
+                indexMax = Array.IndexOf(numOfPixelsList.ToArray(), max);
             }
 
             currCamID = deviceID;
-            currSizeID = (sizeID < 0) ? 0 : sizeID;
+            currSizeID = (sizeID < 0) ? indexMax : sizeID;
             if (videoCapabilities.Count() > 0)
                 cam.VideoResolution = cam.VideoCapabilities[currSizeID];
 
@@ -153,7 +170,21 @@ namespace tCamView
 
             firstimage_captured = false;
             cam.Start();
-            
+
+            CreateContextMenu();
+
+            // 카메라가 다른 프로그램에 의해 사용중인지 체크하기 위한 트릭
+            for (int i = 0; i < 10; i++)
+            {
+                if (firstimage_captured == true)
+                    return 1;
+                System.Threading.Thread.Sleep(100);
+            }
+            return 0;
+        }
+
+        private void CreateContextMenu()
+        {
             ContextMenu cm = new ContextMenu();
             Menu_VideoCapabilities.MenuItems.Clear();
             for (var i = 0; i < videoCapabilitiesList.Count; i++)
@@ -206,15 +237,6 @@ namespace tCamView
             cm.MenuItems.AddRange(new MenuItem[] { Menu_VideoCaptureDevices, Menu_VideoCapabilities,
                 pictureMode, borderOptions, imageFlipping, opacityControl, addFeatures, onTop, minimizeApp, quitApp, aboutApp});
             pictureBox1.ContextMenu = cm;
-
-            // 카메라가 다른 프로그램에 의해 사용중인지 체크하기 위한 트릭
-            for (int i = 0; i < 10; i++)
-            {
-                if (firstimage_captured == true)
-                    return 1;
-                System.Threading.Thread.Sleep(100);
-            }
-            return 0;
         }
 
         private void UpdateMenuItemsChecked()
@@ -368,7 +390,7 @@ namespace tCamView
         private void MenuItem_About_Click(object sender, EventArgs e)
         {
             MessageBox.Show(
-                "tCamView 1.3.6\n" +
+                "tCamView 1.3.7\n" +
                 "Copyright © 2020-2021, Sung Deuk Kim\n" +
                 "All rights reserved.\n" +
                 "--------------------------------\n" +
@@ -385,9 +407,9 @@ namespace tCamView
             int deviceID = (int)((object[])((MenuItem)sender).Tag)[0];
             //MessageBox.Show("VideoCaptureDevice:" + index);
 
-            openVideoCaptureDevice(deviceID, 0);
+            openVideoCaptureDevice(deviceID, -1); // -1: Choose the maximum resolution
             currMenuItem0VideoCaptureDevices = deviceID;
-            currMenuItem1VideoCapabilities = 0;
+            currMenuItem1VideoCapabilities = currSizeID;
             UpdateMenuItemsChecked();
         }
 
